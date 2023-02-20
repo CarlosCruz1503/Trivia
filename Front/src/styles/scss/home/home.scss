@@ -1,0 +1,87 @@
+@import "../root.scss";
+@import url('https://fonts.googleapis.com/css2?family=Righteous&display=swap');
+
+.div-home {
+    width: 100vw;
+    height: 100vh;
+    .home {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        width: 100%;
+        height: 100%;
+        flex-direction: column;
+        position: absolute;
+        background-color: ($base-purple, 0.9);
+        z-index: 1;
+
+        .title-home {
+            font-size: 5rem;
+            font-family: 'Righteous', cursive;
+        }
+
+        .five-more-popular-trivias {
+            display: flex;
+            flex-wrap: wrap;
+            align-items: center;
+            justify-content: center;
+
+            .btn-more-popular {
+                margin: 1rem 3rem;
+                background-color: $base-purple;
+                color: white;
+                display: flex;
+                gap: 0.5rem;
+                justify-content: center;
+                align-items: center;
+                border: 2px solid $border-dark;
+
+                p {
+                    margin: 0;
+                    padding: 0;
+                }
+
+                img {
+                    width: 5rem;
+                    height: 5rem;
+                }
+            }
+        }
+    }
+}
+
+
+
+@media (max-width:768px) {
+    .div-home {
+        .home {
+            .title-home {
+                font-size: 3rem;
+            }
+
+            .five-more-popular-trivias {
+
+                .btn-more-popular {
+                    margin: 1rem 1rem;
+                    background-color: $base-purple;
+                    color: white;
+                    display: flex;
+                    gap: 0.5rem;
+                    justify-content: center;
+                    align-items: center;
+                    border: 2px solid $border-dark;
+
+                    p {
+                        margin: 0;
+                        padding: 0;
+                    }
+
+                    img {
+                        width: 3rem;
+                        height: 3rem;
+                    }
+                }
+            }
+        }
+    }
+}

@@ -1,0 +1,13 @@
+@import "../root.scss";
+.div-navquestions{
+    background-color: $border-dark;
+    z-index:100;
+    color:white;
+    .navquestions{
+        display: flex;
+        justify-content: space-around;
+        align-items: center;
+        z-index:100;
+        
+    }
+}
