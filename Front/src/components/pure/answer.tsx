@@ -1,35 +1,53 @@
-import React, { useEffect } from 'react'
-import { answer } from '../../interfaces/interfaces'
+import React, { useEffect, useState } from 'react'
+import { TAnswer } from '../../interfaces/interfaces'
 
 type Props = {
-    answer: answer,
+    answers: TAnswer[],
     siguiente: Function
-    timeStop:Function
+    timeStop: Function
 }
 
-export default function IanswerComponent({ answer, siguiente,timeStop }: Props): JSX.Element {
 
-    const select = (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
+
+export default function IanswerComponent({ answers, siguiente, timeStop }: Props): JSX.Element {
+
+    const [answersSelect, setAnswersSelect] = useState<Boolean>(true)
+
+    const select = (e: React.MouseEvent<HTMLButtonElement, MouseEvent>, answer: TAnswer): void => {
+
         timeStop()
-        console.log(e.target)
         let element = e.target as Element
-        if (answer.correct){
-            element.classList.add("correct")
-        } else {
-            element.classList.add("incorrect")
+        if ( answersSelect ){
+            if (answer.correct) {
+                element.classList.add("correct")
+            } else {
+                element.classList.add("incorrect")
+            }
+            setTimeout(() => {
+                element.classList.remove("correct")
+                element.classList.remove("incorrect")
+                siguiente(answer.correct)
+            }, 3000)
         }
-        setTimeout(() => {
-            element.classList.remove("correct")
-            element.classList.remove("incorrect")
-            siguiente(answer.correct)
-        }, 3000)
+        setAnswersSelect(false)
     }
-
     return (
-        <div className="col-12 col-md-6 col-questions" >
-            <button className="respuesta" onClick={select}>
-                {answer.answerText}
-            </button>
+        <div className="row" >
+            {
+                    answers.map((answer => {
+                        return (
+                            <div className="col-12 col-md-6 col-questions" >
+                                <button className="respuesta" onClick={(e) => {
+                                    select(e, answer)
+                                }}>
+                                    {answer.answerTitle}
+                                </button>
+                            </div>
+                        )
+                    }))
+            }
         </div>
     )
+
 }
+

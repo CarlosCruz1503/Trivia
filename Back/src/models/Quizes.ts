@@ -1,13 +1,15 @@
 import mongoose, { AnyExpression, AnyObject } from "mongoose";
 const Schema = mongoose.Schema;
 
-
 const Quiz = new Schema(
     {
         name: String,
         questions: [{
-            answerTitle: String,
-            correct: Boolean
+            questionsTitle: String,
+            answers: [{
+                answerTitle: String,
+                correct: Boolean
+            }]
         }],
         popularity: {
             type: Number,
@@ -15,9 +17,9 @@ const Quiz = new Schema(
         },
         private: Boolean,
         image: { type: Schema.Types.ObjectId, ref: 'StorageModel' },
-        author: { type: Schema.Types.ObjectId, ref: 'UserModel' },
+        author: String,
         points: [{
-            user:  { type: Schema.Types.ObjectId, ref: 'StorageModel' },
+            name: String,
             points: Number
         }],
     },

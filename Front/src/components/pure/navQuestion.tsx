@@ -1,11 +1,11 @@
 import React, { useState, useEffect } from 'react'
 import "../../styles/scss/questions/navQuestions.scss"
-import { question } from '../../interfaces/interfaces'
+import { TQuestions } from '../../interfaces/interfaces'
 
 type Props = {
     secondsState:number
     nQuestions:number
-    questions:question[]
+    questions:TQuestions[]
 }
 
 export default function NavQuestion({ secondsState, nQuestions,questions }: Props) {

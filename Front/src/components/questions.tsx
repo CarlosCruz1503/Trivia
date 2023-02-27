@@ -1,44 +1,27 @@
 import React, { useState, useEffect } from 'react'
-import "../../styles/scss/questions/questions.scss"
-import NavQuestion from '../../components/pure/navQuestion'
-import { question, answer } from '../../interfaces/interfaces'
-import answerComponent from '../../components/pure/answer'
-import IanswerComponent from '../../components/pure/answer'
-import IFinalAnswerPage from '../../components/pure/finalAnswerPage'
-import backgroundImage from "../../resources/5719387.jpg"
+import "../styles/scss/questions/questions.scss"
+import NavQuestion from './pure/navQuestion'
+import { TQuiz, TQuestions } from '../interfaces/interfaces'
+import IanswerComponent from './pure/answer'
+import IFinalAnswerPage from './pure/finalAnswerPage'
+import backgroundImage from "../resources/5719387.jpg"
+import { useParams } from 'react-router-dom'
 
 interface appState {
     secondsState: number
     nQuestions: number
-    question: question
-    questions: question[]
+    question: TQuestions
+    questions: TQuestions[]
     loading: boolean
     numCorrects: number
     points: number
     secondsForAnswer: number
 }
 
-let answer1: answer = {
-    answerText: "Respuesta 1",
-    correct: false
+type Props = {
+    questionsList: TQuestions[]
 }
 
-let answer2: answer = {
-    answerText: "Respuesta 2",
-    correct: true
-}
-
-let questionPrueba: question = {
-    questionTitle: " Pregunta 1",
-    answers: [answer1, answer2]
-}
-
-let questionPrueba2: question = {
-    questionTitle: " Pregunta 2",
-    answers: [answer1, answer2]
-}
-
-let arrayQuestions = [questionPrueba, questionPrueba2]
 
 let seconds = 20
 
@@ -46,12 +29,12 @@ let finalPage = false
 
 let answerSeconds = 0
 
-export default function Questions(): JSX.Element {
+export default function IQuestions({ questionsList }: Props): JSX.Element {
 
     const [secondsState, setSecondsState] = useState<appState["secondsState"]>(20)
     const [nQuestions, setNQuestions] = useState<appState["nQuestions"]>(1)
-    const [question, setQuestion] = useState<appState["question"]>(arrayQuestions[0])
-    const [questions, setQuestions] = useState<appState["questions"]>(arrayQuestions)
+    const [question, setQuestion] = useState<appState["question"]>(questionsList[0])
+    const [questions, setQuestions] = useState<appState["questions"]>(questionsList)
     const [loading, setLoading] = useState<appState["loading"]>(false)
     const [numCorrects, setNumCorrects] = useState<appState["numCorrects"]>(0)
     const [points, setPoints] = useState<appState["points"]>(0)
@@ -72,15 +55,15 @@ export default function Questions(): JSX.Element {
                 clearInterval(interval);
             }
         }, 1000);
+
         return () => clearInterval(interval);
     }, [])
-
 
     if (nQuestions > questions.length) {
         finalPage = true
     }
 
-    const timeStop  = () => {
+    const timeStop = () => {
         seconds = 20
     }
 
@@ -114,7 +97,7 @@ export default function Questions(): JSX.Element {
             <div className="questions">
                 {question && !loading && !finalPage
                     ?
-                    <h1 className='mb-5'>{question.questionTitle}</h1>
+                    <h1 className='mb-5'>{question.questionsTitle}</h1>
                     :
                     <></>
                 }
@@ -139,11 +122,7 @@ export default function Questions(): JSX.Element {
                                 :
                                 question && !finalPage
                                     ?
-                                    question.answers.map((answer): JSX.Element => {
-                                        return (
-                                            <IanswerComponent answer={answer} siguiente={siguiente} timeStop={timeStop}></IanswerComponent>
-                                        )
-                                    })
+                                    <IanswerComponent answers={question.answers} siguiente={siguiente} timeStop={timeStop}></IanswerComponent>
                                     :
                                     <></>
                         }

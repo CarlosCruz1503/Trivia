@@ -1,0 +1,18 @@
+@import "../root.scss";
+
+.div-create {
+    width: 100vw;
+    height: auto;
+
+    .create {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        width: 100%;
+        height: auto;
+        flex-direction: column;
+        position: absolute;
+        background-color: ($base-purple, 0.9);
+        z-index: 1;
+    }
+}

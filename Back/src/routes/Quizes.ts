@@ -1,7 +1,9 @@
 import express from "express"
 import { QuizModel } from "../models/Quizes"
 import { handleError } from "../utils/handleError"
-import { getQuizes, getQuiz, createQuiz, deleteQuiz, updateQuiz,PointsQuiz } from "../controllers/Quizes"
+import { getQuizes, getQuiz, createQuiz, deleteQuiz, updateQuiz,pointsQuiz } from "../controllers/Quizes"
+import { createQuizValidator, editQuizValidator, pointQuizValidator } from "../validations/Quizes"
+import { authRequired } from "../middleware/authMiddleware"
 
 const router = express.Router()
 
@@ -9,13 +11,12 @@ router.get(("/"), getQuizes)
 
 router.get(("/:id"), getQuiz)
 
-router.post(("/"), createQuiz)
+router.post(("/"),  createQuizValidator,createQuiz)
 
-router.delete(("/:id"),deleteQuiz)
+router.delete(("/:id"), deleteQuiz)
 
-router.put(("/:id"),updateQuiz)
+router.put(("/:id"),  editQuizValidator,updateQuiz)
 
-router.post(("/points/:id"), PointsQuiz)
-
+router.post(("/points/:id"), authRequired , pointQuizValidator,pointsQuiz)
 
 export default router

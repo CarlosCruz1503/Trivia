@@ -4,6 +4,7 @@
 .div-home {
     width: 100vw;
     height: 100vh;
+
     .home {
         display: flex;
         align-items: center;
@@ -14,6 +15,14 @@
         position: absolute;
         background-color: ($base-purple, 0.9);
         z-index: 1;
+
+        .create-code {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-direction: column;
+            margin: 1rem 2rem;
+        }
 
         .title-home {
             font-size: 5rem;

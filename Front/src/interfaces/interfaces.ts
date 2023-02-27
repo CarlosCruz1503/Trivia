@@ -1,9 +1,31 @@
-export interface answer{
-    answerText:string
-    correct:boolean
+export type TAnswer = {
+    answerTitle: String
+    correct: Boolean
 }
 
-export interface question {
-    questionTitle:string
-    answers:answer[]
+
+
+export type TQuestions = {
+    questionsTitle: String,
+    answers: TAnswer[]
 }
+
+export type TImage = {
+    filename: string,
+    url: string,
+    _id: string,
+    __v: number
+}
+
+export type TQuiz = {
+    _id:String
+    name: String
+    questions: TQuestions[]
+    image: TImage
+    private: Boolean
+    author: {}
+    points: []
+    createdAt: Date
+    updatedAt: Date
+}
+
