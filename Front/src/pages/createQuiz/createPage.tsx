@@ -2,7 +2,7 @@ import React, { useState } from 'react'
 import "../../styles/scss/create/create.scss"
 import backgroundImage from "../../resources/5719387.jpg"
 import * as yup from "yup"
-import { Form, Formik, Field, ErrorMessage, FieldArray } from 'formik'
+import { Form, Formik, Field, ErrorMessage, FieldArray, getIn } from 'formik'
 import { TQuestions, TQuiz } from '../../interfaces/interfaces'
 type Props = {}
 
@@ -17,10 +17,14 @@ export default function IcreatePage({ }: Props) {
             .required("Debes poner un nombre a tu quiz")
             .min(4, "El nombre del quiz debe de ser minimo 4 caracteres")
             .max(20, "El nombre del quiz debe de ser maximo de 20 caracteres"),
-        questions: yup.array().of(yup.object().shape({
-            questionsTitle: yup.string().required(),
-        }).required()
-        ),
+        questions: yup.array()
+            .of(
+                yup.object().shape({
+                    questionsTitle: yup.string().min(4, 'too short').max(20, "demasiado texto").required('Required'), // these constraints take precedence // these constraints take precedence
+                })
+            )
+            .min(4, 'Minimum of 3 friends')
+            .required('Must have friends'), // these constraints are shown if and only if inner constraints are satisfied
         private: yup.string().required(),
         author: yup.string()
             .required("Escribe el nombre del autor del quiz")
@@ -34,13 +38,13 @@ export default function IcreatePage({ }: Props) {
         author: ""
     }
 
-    function arrayQuestionsFunction(values: any) {
+    function arrayQuestionsFunction(values: any, errors: any, touched: any) {
         let arrayQuestions = []
         for (let i = 0; i < nQuestions; i++) {
             arrayQuestions.push(
                 <FieldArray
                     name="questions"
-                    render={(values) => (
+                    render={({ form }) => (
                         <div className='col-12 col-md-6'>
                             <div className="list-group">
                                 <h3 className='text-center'>Titulo de la pregunta #{`${i + 1}`}</h3>
@@ -48,6 +52,16 @@ export default function IcreatePage({ }: Props) {
                                 {
                                     listAnswer(i)
                                 }
+
+                                {errors.questions &&
+                                    errors.questions[i] &&
+                                    errors.questions[i] &&
+                                    touched.questions[i] &&
+                                     (
+                                        <div className="field-error">
+                                            {errors.questions[i]}
+                                        </div>
+                                    )}
                                 <h5 className='text-center'>Cual es la respuesta correcta a la pregunta? </h5>
                                 <div className="answers-yes">
                                     <h2>#1</h2>
@@ -63,6 +77,7 @@ export default function IcreatePage({ }: Props) {
                         </div>
                     )
                     }
+
                 />
             )
         }
@@ -128,6 +143,7 @@ export default function IcreatePage({ }: Props) {
                                             className='form-control'
                                         >
                                         </input>
+
                                         <div className='preview'>
                                             {preview ? <img className='img-profile img-fluid form-image' src={preview} alt="x" /> : <img className='img-profile img-fluid form-image' src={`https://i.pinimg.com/550x/b5/46/3c/b5463c3591ec63cf076ac48179e3b0db.jpg`} alt="x" />}
                                         </div>
@@ -142,6 +158,9 @@ export default function IcreatePage({ }: Props) {
                                             )
                                         }
 
+
+
+
                                         <h3 className='text-center'>Quien es el autor de este quiz</h3>
                                         <Field id="author" name="author" type="text" className="field-form" />
                                         {
@@ -152,14 +171,18 @@ export default function IcreatePage({ }: Props) {
                                             )
                                         }
 
+
                                         <form action="" name="" onSubmit={(evt) => {
                                             evt.preventDefault()
                                             console.log(evt)
                                         }}>
                                             <div className="row">
-                                                {arrayQuestionsFunction(values)}
+                                                {arrayQuestionsFunction(values, errors, touched)}
                                             </div>
                                         </form>
+
+
+
 
                                         <button className='btn btn-dark' onClick={() => {
                                             let numberQ = nQuestions + 1
