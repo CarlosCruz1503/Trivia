@@ -84,10 +84,11 @@ td {
     opacity:100%;
     background-size: cover;
     background-repeat: repeat;
+    background-position: 55%;
 }
-@media (max-width:1200px) {
+@media (max-width:1400px) {
     .background {
-        background-position: 55%;
+        background-position: 75%;
     }
 }
 

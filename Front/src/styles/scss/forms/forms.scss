@@ -5,7 +5,7 @@
     align-items: center;
 
     .form-form {
-        margin-top: 6rem;
+        margin-top: 2rem;
         display: flex;
         flex-direction: column;
         justify-content: center;
@@ -41,6 +41,15 @@
             color: white;
             font-weight: 700;
             margin: 2rem;
+        }
+
+        .btn-big {
+            width: 100%;
+            background-color: #4DB5F9;
+            color: white;
+            font-weight: 700;
+            margin: 2rem;
+            font-size: 2rem;
         }
 
     }
