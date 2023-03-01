@@ -27,7 +27,7 @@ export default function IcreatePage({ }: Props) {
                             .max(50, "La respuesta puede ser de maximo 50 caracteres"),
                     }),
                 ),
-                correct: yup.number()
+                correct: yup.string().required("Debes selecionar cual es la respuesta correcta a la pregunta")
             }),
         ), // these constraints are shown if and only if inner constraints are satisfied
         private: yup.string().required(),
@@ -57,7 +57,7 @@ export default function IcreatePage({ }: Props) {
                     answerTitle: "",
                 }
             ],
-            correct: 1,
+            correct: "",
         }, {
             questionsTitle: "",
             answers: [
@@ -74,7 +74,7 @@ export default function IcreatePage({ }: Props) {
                     answerTitle: "",
                 }
             ],
-            correct: 1,
+            correct: "",
         },
         {
             questionsTitle: "",
@@ -92,7 +92,7 @@ export default function IcreatePage({ }: Props) {
                     answerTitle: "",
                 }
             ],
-            correct: 1,
+            correct: "",
         },
         {
             questionsTitle: "",
@@ -110,7 +110,7 @@ export default function IcreatePage({ }: Props) {
                     answerTitle: "",
                 }
             ],
-            correct: 1,
+            correct: "",
         }]
     }
 
@@ -136,22 +136,22 @@ export default function IcreatePage({ }: Props) {
                                         />
                                         <br />
 
-
-
                                         {listAnswer(index)}
 
                                         <h5 className='text-center mt-5'>Cual es la respuesta correcta a la pregunta? </h5>
-                                        <div className="answers-yes mb-5">
+                                        <div className="answers-yes mb-1">
                                             <br />
                                             <h2>#1</h2>
-                                            <Field type="radio" id={`questions.${index}.correct.${index}`} name={`questions.${index}.correct.${index}`} value="1" checked />
+                                            <Field type="radio" id={`questions.${index}.correct`} name={`questions.${index}.correct`} value="pregunta1" />
                                             <h2>#2</h2>
-                                            <Field type="radio" id={`questions.${index}.correct.${index}`} name={`questions.${index}.correct.${index}`} value="2" />
+                                            <Field type="radio" id={`questions.${index}.correct`} name={`questions.${index}.correct`} value="pregunta2" />
                                             <h2>#3</h2>
-                                            <Field type="radio" id={`questions.${index}.correct.${index}`} name={`questions.${index}.correct.${index}`} value="3" />
+                                            <Field type="radio" id={`questions.${index}.correct`} name={`questions.${index}.correct`} value="pregunta3" />
                                             <h2>#4</h2>
-                                            <Field type="radio" id={`questions.${index}.correct.${index}`} name={`questions.${index}.correct.${index}`} value="4" />
+                                            <Field type="radio" id={`questions.${index}.correct`} name={`questions.${index}.correct`} value="pregunta4" />
+                                            
                                         </div>
+                                        <ErrorMessage name={`questions.${index}.correct`} component="h4" className='text-danger mb-3' />
 
                                         {index >= 4
                                             ?
