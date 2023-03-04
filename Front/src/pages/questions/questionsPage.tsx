@@ -5,7 +5,8 @@ import { TQuestions, TQuiz } from '../../interfaces/interfaces'
 import IQuestions from '../../components/questions'
 
 type appState = {
-    questions: TQuestions[]
+    questions: TQuestions[],
+    quiz:TQuiz
 }
 
 type Props = {}
@@ -15,12 +16,14 @@ export default function IquestionsPage({ }: Props) {
     const { id } = useParams()
 
     const [questions, setQuestions] = useState<appState["questions"]>()
+    const [quiz, setQuiz] = useState<appState["quiz"]>()
 
     useEffect(() => {
         if (id) {
             let quiz: TQuiz
             getQuiz(id)
                 .then(res => {
+                    setQuiz(res.data)
                     setQuestions(res.data.questions)
                 })
         }
@@ -29,9 +32,9 @@ export default function IquestionsPage({ }: Props) {
     return (
         <div className="">
             {
-                questions
+                questions && quiz
                     ?
-                    <IQuestions questionsList={questions}></IQuestions>
+                    <IQuestions questionsList={questions} quiz={quiz}></IQuestions>
                     :
                     <></>
             }

@@ -4,13 +4,17 @@ import backgroundImage from "../../resources/5719387.jpg"
 import * as yup from "yup"
 import { Form, Formik, Field, ErrorMessage, FieldArray, getIn } from 'formik'
 import { TQuestions, TQuiz } from '../../interfaces/interfaces'
+import { instance } from '../../utils/axiosConfig'
 type Props = {}
 
 export default function IcreatePage({ }: Props) {
 
     const [file, setFile] = useState<File>()
+    const [fileError, setFileError] = useState<Boolean>(false)
     const [preview, setPreview] = useState<string>()
-    const [nQuestions, setNQuestions] = useState<number>(4)
+    const [sucess, setSucess] = useState<Boolean>()
+    const [loading, setLoading] = useState<Boolean>()
+    const [quizId, setQuizId] = useState<string>()
 
     const quizSchema: any = yup.object().shape({
         name: yup.string()
@@ -25,6 +29,7 @@ export default function IcreatePage({ }: Props) {
                         answerTitle: yup.string().required("Todas las preguntas deben tener 4 respuestas")
                             .min(4, "La respuesta debe ser de minimo 4 caracteres")
                             .max(50, "La respuesta puede ser de maximo 50 caracteres"),
+
                     }),
                 ),
                 correct: yup.string().required("Debes selecionar cual es la respuesta correcta a la pregunta")
@@ -142,14 +147,14 @@ export default function IcreatePage({ }: Props) {
                                         <div className="answers-yes mb-1">
                                             <br />
                                             <h2>#1</h2>
-                                            <Field type="radio" id={`questions.${index}.correct`} name={`questions.${index}.correct`} value="pregunta1" />
+                                            <Field type="radio" id={`questions.${index}.correct`} name={`questions.${index}.correct`} value="0" />
                                             <h2>#2</h2>
-                                            <Field type="radio" id={`questions.${index}.correct`} name={`questions.${index}.correct`} value="pregunta2" />
+                                            <Field type="radio" id={`questions.${index}.correct`} name={`questions.${index}.correct`} value="1" />
                                             <h2>#3</h2>
-                                            <Field type="radio" id={`questions.${index}.correct`} name={`questions.${index}.correct`} value="pregunta3" />
+                                            <Field type="radio" id={`questions.${index}.correct`} name={`questions.${index}.correct`} value="2" />
                                             <h2>#4</h2>
-                                            <Field type="radio" id={`questions.${index}.correct`} name={`questions.${index}.correct`} value="pregunta4" />
-                                            
+                                            <Field type="radio" id={`questions.${index}.correct`} name={`questions.${index}.correct`} value="3" />
+
                                         </div>
                                         <ErrorMessage name={`questions.${index}.correct`} component="h4" className='text-danger mb-3' />
 
@@ -185,7 +190,8 @@ export default function IcreatePage({ }: Props) {
                                             {
                                                 answerTitle: "",
                                             }
-                                        ]
+                                        ],
+                                        correct: "",
                                     })
                                 } // insert an empty string at a position
                             >
@@ -232,7 +238,63 @@ export default function IcreatePage({ }: Props) {
                             initialValues={initialValues}
                             validationSchema={quizSchema}
                             onSubmit={async (values) => {
-                                console.log(values)
+                                let questionsGood: any[] = []
+
+                                if (file) {
+                                    console.log(file)
+                                    let formData = new FormData()
+                                    formData.append('myFile', file);
+                                    instance.post("/api/storage", formData)
+                                        .then((res) => {
+                                            console.log(res)
+                                            values.questions.map((question, index) => {
+                                                question.answers.map((answer, index) => {
+
+                                                    if (question.correct == index.toString()) {
+                                                        Object.assign(answer, {
+                                                            correct: "true"
+                                                        })
+                                                    } else {
+
+                                                        Object.assign(answer, {
+                                                            correct: "false"
+                                                        })
+
+                                                    }
+                                                })
+
+                                                questionsGood.push(question)
+                                            })
+                                            const dataQuiz = {
+                                                name: values.name,
+                                                questions: questionsGood,
+                                                image: res.data._id,
+                                                private: values.private,
+                                                author: values.author,
+                                                points: []
+                                            }
+                                            setLoading(true)
+                                            instance.post("/api/quiz/", dataQuiz)
+                                                .then(res => {
+                                                    console.log(res)
+                                                    setSucess(true)
+                                                    setLoading(false)
+                                                    setQuizId(res.data._id)
+                                                })
+                                                .catch(e => {
+                                                    setSucess(false)
+                                                    console.log(e)
+                                                    setLoading(false)
+                                                })
+                                        }).catch(e => {
+                                            console.log(e)
+                                        })
+
+                                } else {
+                                    console.log("error file")
+                                    setFileError(true)
+                                }
+
                             }}>
 
                             {({ errors, touched, isSubmitting, values }) => {
@@ -264,6 +326,7 @@ export default function IcreatePage({ }: Props) {
                                             className='form-control'
                                         >
                                         </input>
+                                        {fileError ? (<h1 className='text-danger'>Debes poner una foto a tú Quiz </h1>) : null}
 
                                         <div className='preview'>
                                             {preview ? <img className='img-profile img-fluid form-image' src={preview} alt="x" /> : <img className='img-profile img-fluid form-image' src={`https://i.pinimg.com/550x/b5/46/3c/b5463c3591ec63cf076ac48179e3b0db.jpg`} alt="x" />}
@@ -295,7 +358,19 @@ export default function IcreatePage({ }: Props) {
                                         <h2>Agrega preguntas a tu Quiz</h2>
                                         {arrayQuestionsFunction(values, errors, touched)}
 
-                                        {isSubmitting ? (<p>Creando tú publicación</p>) : null}
+                                        {loading ? (<h2 className='text-sucess'>Creando tú publicación</h2>) : null}
+                                        {sucess ? (<h1 className='text-sucess'>Quiz creado de forma correcta</h1>) : null}
+                                        {sucess == false ? <h1 className='text-sucess'> Hubo un error la crear tu Quiz, prueba de nuevo</h1> : null}
+                                        {quizId
+                                            ?
+                                            <div>
+                                                <h1 className='text-sucess text-center'> Tu quiz fue creado </h1>
+                                                <h1 className='text-sucess text-center'>Comparte este Id para que otros puedan jugarlo</h1>
+                                                <h2 className='text-center'>{quizId}</h2>
+                                            </div>
+                                            :
+                                            null}
+
                                         <button type="submit" className='btn'><h1>Crear Quiz</h1></button>
                                     </Form>)
                             }}

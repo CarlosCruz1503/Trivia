@@ -20,6 +20,7 @@ interface appState {
 
 type Props = {
     questionsList: TQuestions[]
+    quiz:TQuiz
 }
 
 
@@ -29,7 +30,7 @@ let finalPage = false
 
 let answerSeconds = 0
 
-export default function IQuestions({ questionsList }: Props): JSX.Element {
+export default function IQuestions({ questionsList,quiz }: Props): JSX.Element {
 
     const [secondsState, setSecondsState] = useState<appState["secondsState"]>(20)
     const [nQuestions, setNQuestions] = useState<appState["nQuestions"]>(1)
@@ -104,7 +105,7 @@ export default function IQuestions({ questionsList }: Props): JSX.Element {
                 {
                     finalPage
                         ?
-                        <IFinalAnswerPage numCorrects={numCorrects} questions={questions} secondsForAnswer={answerSeconds}></IFinalAnswerPage>
+                        <IFinalAnswerPage numCorrects={numCorrects} questions={questions} secondsForAnswer={answerSeconds} quizId={quiz._id}></IFinalAnswerPage>
                         :
                         <></>
                 }

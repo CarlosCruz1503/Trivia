@@ -87,8 +87,7 @@ export const pointQuizValidator = [
         .isMongoId(),
     check("user")
         .exists()
-        .notEmpty()
-        .isMongoId(),
+        .notEmpty(),
     check("points")
         .isNumeric()
         .notEmpty(),

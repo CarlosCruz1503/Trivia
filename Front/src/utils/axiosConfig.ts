@@ -1,5 +1,11 @@
 import axios from "axios"
 
+const APIURL = process.env.REACT_APP_API_URL
+
+export const instance = axios.create({
+    baseURL: `${APIURL}`,
+});
+
 export const configSimple = (token:string) => {
     return {
         headers: {

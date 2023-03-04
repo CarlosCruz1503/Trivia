@@ -17,6 +17,6 @@ router.delete(("/:id"), deleteQuiz)
 
 router.put(("/:id"),  editQuizValidator,updateQuiz)
 
-router.post(("/points/:id"), authRequired , pointQuizValidator,pointsQuiz)
+router.post(("/points/:id"), pointQuizValidator,pointsQuiz)
 
 export default router
