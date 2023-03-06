@@ -17,8 +17,14 @@ export type TImage = {
     __v: number
 }
 
+export type TPoints = {
+    name: string,
+    pointsUser: number,
+    _id: string
+}
+
 export type TQuiz = {
-    _id:String
+    _id: String
     name: String
     questions: TQuestions[]
     image: TImage

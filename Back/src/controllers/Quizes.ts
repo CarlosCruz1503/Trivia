@@ -2,6 +2,7 @@ import express from "express"
 import { QuizModel } from "../models/Quizes"
 import { handleError } from "../utils/handleError"
 import { matchedData } from "express-validator"
+import { Db } from 'mongodb'
 
 export const getQuizes = async (req: express.Request, res: express.Response) => {
     try {
@@ -27,7 +28,7 @@ export const getQuiz = async (req: express.Request, res: express.Response) => {
             console.log(quiz.popularity)
             quiz.popularity++
             console.log(quiz.popularity)
-            const quizNew = await QuizModel.findByIdAndUpdate(id, quiz )
+            const quizNew = await QuizModel.findByIdAndUpdate(id, quiz)
             let actuQuiz = await QuizModel.findById(id).populate("image").populate("author")
             res.send(actuQuiz)
         } else {
@@ -52,7 +53,7 @@ export const createQuiz = async (req: express.Request, res: express.Response) =>
 export const deleteQuiz = async (req: express.Request, res: express.Response) => {
     try {
         const id = req.params.id
-        const quiz = await QuizModel.remove({ id })
+        const quiz = await QuizModel.deleteOne({ id })
         res.send(quiz)
     } catch {
         handleError(res, "DELETE QUIZ WRONG", 400)
@@ -78,11 +79,23 @@ export const pointsQuiz = async (req: express.Request, res: express.Response) =>
         let quizesOld: any = await QuizModel.findById(id).populate("image").select("-_id")
         quizesOld.points.push(body)
         const quiz = await QuizModel.findByIdAndUpdate(id, quizesOld)
-        let actuQuiz = await QuizModel.findById(id).populate("image").populate("author")
-        res.send(actuQuiz)
+        let quizPoints = await QuizModel.findById(id).select("points").sort("points")
+        res.send(quizPoints)
     } catch (e) {
         handleError(res, "UPDATE QUIZ WRONG", 400)
     }
 }
+
+export const getPointsQuiz = async (req: express.Request, res: express.Response) => {
+    try {
+        const id = req.params.id
+        let quizPoints = await QuizModel.findById(id).select("points")
+
+        res.send(quizPoints)
+    } catch (e) {
+        handleError(res, "GET POINTS QUIZ WRONG", 400)
+    }
+}
+
 
 

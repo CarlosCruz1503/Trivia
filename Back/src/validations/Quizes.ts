@@ -71,10 +71,10 @@ export const editQuizValidator = [
     check("points")
         .isArray()
         .exists(),
-    check("points.*.user")
+    check("points.*.name")
         .isString()
         .exists(),
-    check("points.*.points")
+    check("points.*.pointsUser")
         .exists()
         .isNumeric(),
     (req: express.Request, res: express.Response, next: any) => {
@@ -85,10 +85,10 @@ export const editQuizValidator = [
 export const pointQuizValidator = [
     check("id")
         .isMongoId(),
-    check("user")
+    check("name")
         .exists()
         .notEmpty(),
-    check("points")
+    check("pointsUser")
         .isNumeric()
         .notEmpty(),
     (req: express.Request, res: express.Response, next: any) => {

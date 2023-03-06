@@ -20,7 +20,7 @@ const Quiz = new Schema(
         author: String,
         points: [{
             name: String,
-            points: Number
+            pointsUser: Number
         }],
     },
     {

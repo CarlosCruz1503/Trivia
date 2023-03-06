@@ -1,12 +1,12 @@
 import React, { useEffect, useState } from 'react'
 import { useParams } from 'react-router-dom'
-import { getQuiz } from '../../hooks/getCollections'
-import { TQuestions, TQuiz } from '../../interfaces/interfaces'
+import { getPoints, getQuiz } from '../../hooks/getCollections'
+import { TPoints, TQuestions, TQuiz } from '../../interfaces/interfaces'
 import IQuestions from '../../components/questions'
 
 type appState = {
     questions: TQuestions[],
-    quiz:TQuiz
+    quiz: TQuiz,
 }
 
 type Props = {}

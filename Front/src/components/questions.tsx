@@ -1,11 +1,12 @@
 import React, { useState, useEffect } from 'react'
 import "../styles/scss/questions/questions.scss"
 import NavQuestion from './pure/navQuestion'
-import { TQuiz, TQuestions } from '../interfaces/interfaces'
+import { TQuiz, TQuestions, TPoints } from '../interfaces/interfaces'
 import IanswerComponent from './pure/answer'
 import IFinalAnswerPage from './pure/finalAnswerPage'
 import backgroundImage from "../resources/5719387.jpg"
 import { useParams } from 'react-router-dom'
+import { getPoints, submitPoints } from '../hooks/getCollections'
 
 interface appState {
     secondsState: number
@@ -16,11 +17,12 @@ interface appState {
     numCorrects: number
     points: number
     secondsForAnswer: number
+    pointsI: TPoints[]
 }
 
 type Props = {
     questionsList: TQuestions[]
-    quiz:TQuiz
+    quiz: TQuiz
 }
 
 
@@ -30,7 +32,7 @@ let finalPage = false
 
 let answerSeconds = 0
 
-export default function IQuestions({ questionsList,quiz }: Props): JSX.Element {
+export default function IQuestions({ questionsList, quiz }: Props): JSX.Element {
 
     const [secondsState, setSecondsState] = useState<appState["secondsState"]>(20)
     const [nQuestions, setNQuestions] = useState<appState["nQuestions"]>(1)
@@ -40,8 +42,20 @@ export default function IQuestions({ questionsList,quiz }: Props): JSX.Element {
     const [numCorrects, setNumCorrects] = useState<appState["numCorrects"]>(0)
     const [points, setPoints] = useState<appState["points"]>(0)
     const [secondsForAnswer, setsecondsForAnswer] = useState<appState["secondsForAnswer"]>(0)
+    const [pointsState, setPointsState] = useState<appState["pointsI"]>([])
 
     useEffect(() => {
+
+        getPoints(quiz._id)
+            .then(res => {
+                const pointsUnOrder = res.data.points
+                console.log(pointsUnOrder)
+                let pointsOrder = pointsUnOrder.sort(
+                    (p1: any, p2: any) => (p1.pointsUser < p2.pointsUser) ? 1 : (p1.pointsUser > p2.pointsUser) ? -1 : 0);
+                setPointsState(pointsOrder)
+                console.log(pointsOrder)
+            })
+
         const interval = setInterval(() => {
             setSecondsState(secondsState => secondsState - 1)
             seconds--
@@ -85,6 +99,18 @@ export default function IQuestions({ questionsList,quiz }: Props): JSX.Element {
         }, 2000)
     }
 
+    const submitPointsEvent = async (data: Object) => {
+        submitPoints(quiz._id, data)
+            .then(res => {
+                const pointsUnOrder = res.data.points
+                console.log(pointsUnOrder)
+                let pointsOrder = pointsUnOrder.sort(
+                    (p1: any, p2: any) => (p1.pointsUser < p2.pointsUser) ? 1 : (p1.pointsUser > p2.pointsUser) ? -1 : 0);
+                setPointsState(pointsOrder)
+                console.log(pointsOrder)
+            })
+    }
+
     return (
         <div className='div-questions'>
             {
@@ -105,7 +131,7 @@ export default function IQuestions({ questionsList,quiz }: Props): JSX.Element {
                 {
                     finalPage
                         ?
-                        <IFinalAnswerPage numCorrects={numCorrects} questions={questions} secondsForAnswer={answerSeconds} quizId={quiz._id}></IFinalAnswerPage>
+                        <IFinalAnswerPage numCorrects={numCorrects} questions={questions} secondsForAnswer={answerSeconds} quizId={quiz._id} pointsState={pointsState} submitPointsEvent={submitPointsEvent}></IFinalAnswerPage>
                         :
                         <></>
                 }
