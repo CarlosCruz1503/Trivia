@@ -17,7 +17,15 @@ export default function Home(): JSX.Element {
 
     useEffect(() => {
         getQuizes()
-            .then(res => { setQuizes(res.data) })
+            .then(res => {
+                let quizesTemp:TQuiz[] = [] 
+                res.data.map((quiz:any,index:any)=> {
+                    if (index < 5){
+                        quizesTemp.push(quiz)
+                    }
+                }) 
+                setQuizes(quizesTemp)
+            })
     }, [])
 
     const idTrivia = React.useRef<HTMLInputElement>(null);
@@ -50,6 +58,9 @@ export default function Home(): JSX.Element {
                             <></>
                     }
                 </div>
+                <button className='btn btn-dark'>
+                    Ver todos los Quizes
+                </button>
                 <div className="create-code">
                     <h2 className='text-center'> Crea tu propia trivia y desafia a tus amigos</h2>
                     <button className="btn btn-primary " onClick={() => {

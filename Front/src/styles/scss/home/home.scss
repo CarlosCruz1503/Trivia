@@ -59,7 +59,39 @@
     }
 }
 
+@media (max-width:998px) {
+    .div-home {
+        .home {
+            .title-home {
+                font-size: 3rem;
+            }
 
+            .five-more-popular-trivias {
+
+                .btn-more-popular {
+                    margin: 1rem 1rem;
+                    background-color: $base-purple;
+                    color: white;
+                    display: flex;
+                    gap: 0.5rem;
+                    justify-content: center;
+                    align-items: center;
+                    border: 2px solid $border-dark;
+
+                    p {
+                        margin: 0;
+                        padding: 0;
+                    }
+
+                    img {
+                        width: 2.5rem;
+                        height: 2.5rem;
+                    }
+                }
+            }
+        }
+    }
+}
 
 @media (max-width:768px) {
     .div-home {

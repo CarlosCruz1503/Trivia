@@ -111,6 +111,13 @@ export default function IQuestions({ questionsList, quiz }: Props): JSX.Element 
             })
     }
 
+    if (finalPage){
+        return (
+            <IFinalAnswerPage numCorrects={numCorrects} questions={questions} secondsForAnswer={answerSeconds} quizId={quiz._id} pointsState={pointsState} submitPointsEvent={submitPointsEvent}></IFinalAnswerPage>
+        )
+    }
+
+
     return (
         <div className='div-questions'>
             {
@@ -127,13 +134,6 @@ export default function IQuestions({ questionsList, quiz }: Props): JSX.Element 
                     <h1 className='mb-5'>{question.questionsTitle}</h1>
                     :
                     <></>
-                }
-                {
-                    finalPage
-                        ?
-                        <IFinalAnswerPage numCorrects={numCorrects} questions={questions} secondsForAnswer={answerSeconds} quizId={quiz._id} pointsState={pointsState} submitPointsEvent={submitPointsEvent}></IFinalAnswerPage>
-                        :
-                        <></>
                 }
                 <div className="container">
                     <div className="row row-questions">

@@ -6,7 +6,7 @@ import { Db } from 'mongodb'
 
 export const getQuizes = async (req: express.Request, res: express.Response) => {
     try {
-        const quizes = await QuizModel.find({}).populate("image").sort("popularity")
+        const quizes = await QuizModel.find({}).populate("image").sort("-popularity")
         let quizesPublic: any[] = []
         quizes.map((quiz) => {
             if (quiz.private == false) {

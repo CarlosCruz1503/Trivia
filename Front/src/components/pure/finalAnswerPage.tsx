@@ -26,111 +26,130 @@ export default function IFinalAnswerPage({ numCorrects, questions, secondsForAns
 
     const inputRef = useRef<HTMLInputElement | null>(null)
 
+    const buttonRef = useRef<HTMLButtonElement | null>(null)
+
+    const [puntajeSubmit, setPuntajeSubmit] = useState(false)
+
     console.log(pointsState)
 
     return (
         <div className="div-final">
-            <div className="background" style={{ backgroundImage: `url(${backgroundImage})` }}></div>
-            <div className="final">
-                <h1>Respuestas Correctas</h1>
-                <h1>{numCorrects}/{questions.length}</h1>
-                <h1 className='text-center m-1'>Tardaste {secondsForAnswer}s en contestar la trivia</h1>
-                <h1> Tu puntaje es {points}</h1>
-                <h4 className='text-center text-medallero'>Digita tú nombre para que entres en nuestro medallero</h4>
-                <form method="POST" action="" onSubmit={(e) => {
-                    e.preventDefault()
-                    if (inputRef.current?.value) {
-                        let data = {
-                            name: inputRef.current.value,
-                            pointsUser: points
+            <div className="background" style={{ backgroundImage: `url(${backgroundImage})` }}>
+                <div className="final">
+                    <h1>Respuestas Correctas</h1>
+                    <h1>{numCorrects}/{questions.length}</h1>
+                    <h1 className='text-center m-1'>Tardaste {secondsForAnswer}s en contestar la trivia</h1>
+                    <h1> Tu puntaje es {points}</h1>
+                    <h4 className='text-center text-medallero'>Digita tú nombre para que entres en nuestro medallero</h4>
+                    <form method="POST" action="" onSubmit={(e) => {
+                        e.preventDefault()
+                        if (inputRef.current?.value && !puntajeSubmit) {
+                            let data = {
+                                name: inputRef.current.value,
+                                pointsUser: points
+                            }
+                            submitPointsEvent(data)
+                            inputRef.current.value = ""
+                            setPuntajeSubmit(true)
                         }
-                        submitPointsEvent(data)
+                    }}>
+                        {
+                            !puntajeSubmit
+                                ?
+                                <div style={{ display: 'flex' }}>
+                                    <input ref={inputRef} type="text" name="nameUser" className="form-control" style={{ maxWidth: "20rem" }} placeholder='Digita tú nombre' minLength={4} maxLength={30} />
+                                    <button type="submit" ref={buttonRef} className='btn btn-dark'>Unirme al medallero</button>
+                                </div>
+                                :
+                                <></>
+                        }
+                    </form>
+
+                    {
+                        pointsState
+                            ?
+                            <div>
+                                {
+                                    puntajeSubmit
+                                        ?
+                                        <h2 className='text-sucess text-center'> Ya subiste tú puntaje al medallero</h2>
+                                        :
+                                        <></>
+                                }
+                                <h1 className='text-center'>Nuestro Medallero</h1>
+                                <table className="table table-bordered mt-3 table-dark" >
+                                    <thead >
+                                        <tr>
+                                            <th scope="col">Nombre</th>
+                                            <th scope="col">Puntos</th>
+                                        </tr>
+                                    </thead>
+                                    {pointsState.map((points, index) => {
+                                        return (
+                                            <tbody>
+                                                {
+                                                    index == 0
+                                                        ?
+                                                        <tr className='table' style={{ backgroundColor: "#EBCF51" }}>
+                                                            <td style={{ display: "flex", alignItems: "center", justifyContent: "center" }}>
+                                                                <img src={oro} width={"60px"} height={"60px"} alt="" />
+                                                                <h3>{points.name}</h3>
+                                                            </td>
+                                                            <td><h3>{points.pointsUser}</h3></td>
+                                                        </tr>
+                                                        :
+                                                        <></>
+                                                }
+                                                {
+                                                    index == 1
+                                                        ?
+                                                        <tr className='table' style={{ backgroundColor: "#737F87" }}>
+                                                            <td style={{ display: "flex", alignItems: "center", justifyContent: "center" }}>
+                                                                <img src={plata} width={"50px"} height={"50px"} alt="" />
+                                                                <h3>{points.name}</h3>
+                                                            </td>
+                                                            <td><h3>{points.pointsUser}</h3></td>
+                                                        </tr>
+                                                        :
+                                                        <></>
+                                                }
+                                                {
+                                                    index == 2
+                                                        ?
+                                                        <tr className='table' style={{ backgroundColor: "#E38A46" }}>
+                                                            <td style={{ display: "flex", alignItems: "center", justifyContent: "center" }}>
+                                                                <img src={bronze} width={"40px"} height={"40px"} alt="" />
+                                                                <h3>{points.name}</h3>
+                                                            </td>
+                                                            <td><h3>{points.pointsUser}</h3></td>
+                                                        </tr>
+                                                        :
+                                                        <></>
+                                                }
+                                                {
+                                                    index != 0 && index != 1 && index != 2
+                                                        ?
+                                                        <tr>
+                                                            <td style={{ display: "flex", alignItems: "center", justifyContent: "center" }}>
+                                                                <h3>{points.name}</h3>
+                                                            </td>
+                                                            <td><h3>{points.pointsUser}</h3></td>
+                                                        </tr>
+                                                        :
+                                                        <></>
+                                                }
+
+                                            </tbody>
+                                        )
+                                    })}
+                                </table>
+                            </div>
+
+                            :
+                            <></>
                     }
-                }}>
-                    <div style={{ display: 'flex' }}>
-                        <input ref={inputRef} type="text" name="nameUser" className="form-control" style={{ maxWidth: "20rem" }} placeholder='Digita tú nombre' minLength={4} maxLength={30} />
-                        <button type="submit" className='btn btn-dark'>Unirme al medallero</button>
-                    </div>
-                </form>
-
-                {
-                    pointsState
-                        ?
-                        <div>
-                            <h1>Nuestro Medallero</h1>
-                            <table className="table table-bordered mt-3 table-dark" >
-                                <thead >
-                                    <tr>
-                                        <th scope="col">Nombre</th>
-                                        <th scope="col">Puntos</th>
-                                    </tr>
-                                </thead>
-                                {pointsState.map((points, index) => {
-                                    return (
-                                        <tbody>
-                                            {
-                                                index == 0
-                                                    ?
-                                                    <tr className='table' style={{ backgroundColor: "#EBCF51" }}>
-                                                        <td style={{ display: "flex", alignItems: "center", justifyContent: "center" }}>
-                                                            <img src={oro} width={"60px"} height={"60px"} alt="" />
-                                                            <h3>{points.name}</h3>
-                                                        </td>
-                                                        <td><h3>{points.pointsUser}</h3></td>
-                                                    </tr>
-                                                    :
-                                                    <></>
-                                            }
-                                            {
-                                                index == 1
-                                                    ?
-                                                    <tr className='table' style={{ backgroundColor: "#737F87" }}>
-                                                        <td style={{ display: "flex", alignItems: "center", justifyContent: "center" }}>
-                                                            <img src={plata} width={"50px"} height={"50px"} alt="" />
-                                                            <h3>{points.name}</h3>
-                                                        </td>
-                                                        <td><h3>{points.pointsUser}</h3></td>
-                                                    </tr>
-                                                    :
-                                                    <></>
-                                            }
-                                            {
-                                                index == 2
-                                                    ?
-                                                    <tr className='table' style={{ backgroundColor: "#E38A46" }}>
-                                                        <td style={{ display: "flex", alignItems: "center", justifyContent: "center" }}>
-                                                            <img src={bronze} width={"40px"} height={"40px"} alt="" />
-                                                            <h3>{points.name}</h3>
-                                                        </td>
-                                                        <td><h3>{points.pointsUser}</h3></td>
-                                                    </tr>
-                                                    :
-                                                    <></>
-                                            }
-                                            {
-                                                index != 0 && index != 1 && index != 2
-                                                    ?
-                                                    <tr>
-                                                        <td style={{ display: "flex", alignItems: "center", justifyContent: "center" }}>
-                                                            <h3>{points.name}</h3>
-                                                        </td>
-                                                        <td><h3>{points.pointsUser}</h3></td>
-                                                    </tr>
-                                                    :
-                                                    <></>
-                                            }
-
-                                        </tbody>
-                                    )
-                                })}
-                            </table>
-                        </div>
-
-                        :
-                        <></>
-                }
-            </div>
-        </div >
-
+                </div>
+            </div >
+        </div>
     )
 }
