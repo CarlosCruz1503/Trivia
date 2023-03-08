@@ -12,6 +12,7 @@ require("dotenv").config();
 const handleDBConnect_1 = require("./utils/handleDBConnect");
 const app = (0, express_1.default)();
 const URI = process.env.URI || "Not URI";
+console.log(URI);
 app.use((0, cors_1.default)());
 app.use(express_1.default.json());
 app.use(express_1.default.static("storage"));
@@ -21,8 +22,8 @@ const PUBLIC_URL = process.env.PUBLIC_URL;
 app.use(("/api/quiz"), Quizes_1.default);
 app.use(("/api/storage"), Storage_1.default);
 app.use(("/api/user"), Users_1.default);
+(0, handleDBConnect_1.dbConnect)();
 app.listen(PORT, () => {
-    (0, handleDBConnect_1.connectDB)(URI);
     console.log(PUBLIC_URL);
     console.log("PORT");
 });

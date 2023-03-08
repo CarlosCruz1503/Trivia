@@ -6,10 +6,10 @@ import UserRouter from "./routes/Users"
 
 require("dotenv").config()
 
-import {connectDB} from "./utils/handleDBConnect"
+import { dbConnect } from "./utils/handleDBConnect"
 const app = express()
 const URI = process.env.URI || "Not URI" 
-
+console.log(URI)
 app.use(cors())
 app.use(express.json())
 app.use(express.static("storage"))
@@ -21,9 +21,9 @@ app.use(("/api/quiz"), QuizRouter)
 app.use(("/api/storage"), StorageRouter)
 app.use(("/api/user"), UserRouter)
 
+dbConnect()
 
 app.listen(PORT, () => {
-    connectDB(URI)
     console.log(PUBLIC_URL)
     console.log("PORT")
 })

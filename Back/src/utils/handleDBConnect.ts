@@ -1,13 +1,16 @@
-import mongoose from 'mongoose';
+const mongoose = require("mongoose")
 
-
-export const connectDB = (URI: string ) => {
-    mongoose.connect(URI)
-        .then(() => console.log('Connected!'))
-        .catch((e) => {
-            console.log(e)
-        })
-    
+export const dbConnect = () => {
+    const DB_URI = process.env.DB_URI || "mongodb+srv://carlos:carlos123@cluster0.fkvysml.mongodb.net/?retryWrites=true&w=majority"
+    mongoose.connect(DB_URI, {
+        useNewUrlParser: true,
+        useUnifiedTopology: true,
+    }, (err:any, res:any) => {
+        if (!err) {
+            console.log("conexion Correcta")
+        } else {
+            console.log("Error de conexion")
+        }
+    })
 }
-
-mongoose.set('strictQuery', true)
+mongoose.set('strictQuery', false)
