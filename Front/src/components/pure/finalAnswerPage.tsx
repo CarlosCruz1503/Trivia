@@ -99,7 +99,7 @@ export default function IFinalAnswerPage({ numCorrects, questions, secondsForAns
                                                         <tr className='table tr-golden' style={{ backgroundColor: "#EBCF51" }}>
                                                             <td style={{ display: "flex", alignItems: "center", justifyContent: "center" }}>
                                                                 <img src={oro} width={"60px"} height={"60px"} alt="" />
-                                                                <h3>{points.name}</h3>
+                                                                <h1>{points.name}</h1>
                                                             </td>
                                                             <td style={{ height: "50px", width: "100px" }}  >
                                                                 <h1 className='text-center'>{points.pointsUser}</h1>
@@ -114,10 +114,10 @@ export default function IFinalAnswerPage({ numCorrects, questions, secondsForAns
                                                         <tr className='table' style={{ backgroundColor: "#737F87" }}>
                                                             <td style={{ display: "flex", alignItems: "center", justifyContent: "center" }}>
                                                                 <img src={plata} width={"50px"} height={"50px"} alt="" />
-                                                                <h3>{points.name}</h3>
+                                                                <h2>{points.name}</h2>
                                                             </td>
-                                                            <td style={{ height: "50px", width: "100px" }}  >
-                                                                <h1 className='text-center'>{points.pointsUser}</h1>
+                                                            <td style={{ height: "45px", width: "100px" }}  >
+                                                                <h2 className='text-center'>{points.pointsUser}</h2>
                                                             </td>
                                                         </tr>
                                                         :
@@ -131,8 +131,8 @@ export default function IFinalAnswerPage({ numCorrects, questions, secondsForAns
                                                                 <img src={bronze} width={"40px"} height={"40px"} alt="" />
                                                                 <h3>{points.name}</h3>
                                                             </td>
-                                                            <td style={{ height: "50px", width: "100px" }}  >
-                                                                <h1 className='text-center'>{points.pointsUser}</h1>
+                                                            <td style={{ height: "40px", width: "100px" }}  >
+                                                                <h3 className='text-center'>{points.pointsUser}</h3>
                                                             </td>
                                                         </tr>
                                                         :
@@ -143,10 +143,10 @@ export default function IFinalAnswerPage({ numCorrects, questions, secondsForAns
                                                         ?
                                                         <tr>
                                                             <td style={{ display: "flex", alignItems: "center", justifyContent: "center" }}>
-                                                                <h3>{points.name}</h3>
+                                                                <h4>{points.name}</h4>
                                                             </td>
-                                                            <td style={{ height: "50px", width: "100px" }}  >
-                                                                <h1 className='text-center'>{points.pointsUser}</h1>
+                                                            <td style={{ height: "35px", width: "100px" }}  >
+                                                                <h4 className='text-center'>{points.pointsUser}</h4>
                                                             </td>
                                                         </tr>
                                                         :
