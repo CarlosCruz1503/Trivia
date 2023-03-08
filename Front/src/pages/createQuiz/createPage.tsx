@@ -273,6 +273,84 @@ export default function IcreatePage({ }: Props) {
                                                 author: values.author,
                                                 points: []
                                             }
+
+                                            values.name = ""
+                                            values.questions = [{
+                                                questionsTitle: "",
+                                                answers: [
+                                                    {
+                                                        answerTitle: "",
+                                                    },
+                                                    {
+                                                        answerTitle: "",
+                                                    },
+                                                    {
+                                                        answerTitle: "",
+                                                    },
+                                                    {
+                                                        answerTitle: "",
+                                                    }
+                                                ],
+                                                correct: "",
+                                            }, {
+                                                questionsTitle: "",
+                                                answers: [
+                                                    {
+                                                        answerTitle: "",
+                                                    },
+                                                    {
+                                                        answerTitle: "",
+                                                    },
+                                                    {
+                                                        answerTitle: "",
+                                                    },
+                                                    {
+                                                        answerTitle: "",
+                                                    }
+                                                ],
+                                                correct: "",
+                                            },
+                                            {
+                                                questionsTitle: "",
+                                                answers: [
+                                                    {
+                                                        answerTitle: "",
+                                                    },
+                                                    {
+                                                        answerTitle: "",
+                                                    },
+                                                    {
+                                                        answerTitle: "",
+                                                    },
+                                                    {
+                                                        answerTitle: "",
+                                                    }
+                                                ],
+                                                correct: "",
+                                            },
+                                            {
+                                                questionsTitle: "",
+                                                answers: [
+                                                    {
+                                                        answerTitle: "",
+                                                    },
+                                                    {
+                                                        answerTitle: "",
+                                                    },
+                                                    {
+                                                        answerTitle: "",
+                                                    },
+                                                    {
+                                                        answerTitle: "",
+                                                    }
+                                                ],
+                                                correct: "",
+                                            }]
+                                            values.author=""
+                                            values.private=""
+                                            
+
+
                                             setLoading(true)
                                             instance.post("/api/quiz/", dataQuiz)
                                                 .then(res => {

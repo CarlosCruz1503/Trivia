@@ -46,6 +46,10 @@ export default function IQuestions({ questionsList, quiz }: Props): JSX.Element 
 
     useEffect(() => {
 
+        if (finalPage) {
+            finalPage = false
+        }
+
         getPoints(quiz._id)
             .then(res => {
                 const pointsUnOrder = res.data.points
@@ -111,7 +115,7 @@ export default function IQuestions({ questionsList, quiz }: Props): JSX.Element 
             })
     }
 
-    if (finalPage){
+    if (finalPage) {
         return (
             <IFinalAnswerPage numCorrects={numCorrects} questions={questions} secondsForAnswer={answerSeconds} quizId={quiz._id} pointsState={pointsState} submitPointsEvent={submitPointsEvent}></IFinalAnswerPage>
         )
@@ -131,7 +135,11 @@ export default function IQuestions({ questionsList, quiz }: Props): JSX.Element 
             <div className="questions">
                 {question && !loading && !finalPage
                     ?
-                    <h1 className='mb-5'>{question.questionsTitle}</h1>
+                    <div style={{display:"flex",flexDirection:"column",width:"100%",alignItems:"center",justifyContent:"center"}}>
+                        <img src={quiz.image.url} alt="" width={"200px"} style={{borderRadius:"50%"}} />
+                        <h2 className='mb-5 text-center'>{question.questionsTitle}</h2>
+                    </div>
+
                     :
                     <></>
                 }
@@ -149,7 +157,7 @@ export default function IQuestions({ questionsList, quiz }: Props): JSX.Element 
                                 :
                                 question && !finalPage
                                     ?
-                                    <IanswerComponent answers={question.answers} siguiente={siguiente} timeStop={timeStop}></IanswerComponent>
+                                    <IanswerComponent answers={question.answers} quizImage={quiz.image.url} siguiente={siguiente} timeStop={timeStop}></IanswerComponent>
                                     :
                                     <></>
                         }

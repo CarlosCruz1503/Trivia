@@ -40,7 +40,13 @@ export default function IFinalAnswerPage({ numCorrects, questions, secondsForAns
                     <h1>{numCorrects}/{questions.length}</h1>
                     <h1 className='text-center m-1'>Tardaste {secondsForAnswer}s en contestar la trivia</h1>
                     <h1> Tu puntaje es {points}</h1>
-                    <h4 className='text-center text-medallero'>Digita tú nombre para que entres en nuestro medallero</h4>
+                    {
+                        !puntajeSubmit
+                            ?
+                            <h4 className='text-center text-medallero'>Digita tú nombre para que entres en nuestro medallero</h4>
+                            :
+                            <></>
+                    }
                     <form method="POST" action="" onSubmit={(e) => {
                         e.preventDefault()
                         if (inputRef.current?.value && !puntajeSubmit) {
@@ -90,12 +96,14 @@ export default function IFinalAnswerPage({ numCorrects, questions, secondsForAns
                                                 {
                                                     index == 0
                                                         ?
-                                                        <tr className='table' style={{ backgroundColor: "#EBCF51" }}>
+                                                        <tr className='table tr-golden' style={{ backgroundColor: "#EBCF51" }}>
                                                             <td style={{ display: "flex", alignItems: "center", justifyContent: "center" }}>
                                                                 <img src={oro} width={"60px"} height={"60px"} alt="" />
                                                                 <h3>{points.name}</h3>
                                                             </td>
-                                                            <td><h3>{points.pointsUser}</h3></td>
+                                                            <td style={{ height: "50px", width: "100px" }}  >
+                                                                <h1 className='text-center'>{points.pointsUser}</h1>
+                                                            </td>
                                                         </tr>
                                                         :
                                                         <></>
@@ -108,7 +116,9 @@ export default function IFinalAnswerPage({ numCorrects, questions, secondsForAns
                                                                 <img src={plata} width={"50px"} height={"50px"} alt="" />
                                                                 <h3>{points.name}</h3>
                                                             </td>
-                                                            <td><h3>{points.pointsUser}</h3></td>
+                                                            <td style={{ height: "50px", width: "100px" }}  >
+                                                                <h1 className='text-center'>{points.pointsUser}</h1>
+                                                            </td>
                                                         </tr>
                                                         :
                                                         <></>
@@ -121,7 +131,9 @@ export default function IFinalAnswerPage({ numCorrects, questions, secondsForAns
                                                                 <img src={bronze} width={"40px"} height={"40px"} alt="" />
                                                                 <h3>{points.name}</h3>
                                                             </td>
-                                                            <td><h3>{points.pointsUser}</h3></td>
+                                                            <td style={{ height: "50px", width: "100px" }}  >
+                                                                <h1 className='text-center'>{points.pointsUser}</h1>
+                                                            </td>
                                                         </tr>
                                                         :
                                                         <></>
@@ -133,7 +145,9 @@ export default function IFinalAnswerPage({ numCorrects, questions, secondsForAns
                                                             <td style={{ display: "flex", alignItems: "center", justifyContent: "center" }}>
                                                                 <h3>{points.name}</h3>
                                                             </td>
-                                                            <td><h3>{points.pointsUser}</h3></td>
+                                                            <td style={{ height: "50px", width: "100px" }}  >
+                                                                <h1 className='text-center'>{points.pointsUser}</h1>
+                                                            </td>
                                                         </tr>
                                                         :
                                                         <></>

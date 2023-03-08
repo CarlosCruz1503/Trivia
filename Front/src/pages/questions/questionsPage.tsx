@@ -18,15 +18,15 @@ export default function IquestionsPage({ }: Props) {
     const [questions, setQuestions] = useState<appState["questions"]>()
     const [quiz, setQuiz] = useState<appState["quiz"]>()
 
-    useEffect(() => {
+    useEffect(() => {       
         if (id) {
-            let quiz: TQuiz
             getQuiz(id)
                 .then(res => {
                     setQuiz(res.data)
                     setQuestions(res.data.questions)
                 })
         }
+
     }, [])
 
     return (

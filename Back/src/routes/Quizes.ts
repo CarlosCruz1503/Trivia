@@ -21,4 +21,5 @@ router.post(("/points/:id"), pointQuizValidator,pointsQuiz)
 
 router.get(("/points/:id"), getPointsQuiz)
 
+
 export default router

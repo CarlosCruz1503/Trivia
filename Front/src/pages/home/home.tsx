@@ -37,8 +37,8 @@ export default function Home(): JSX.Element {
         <div className='div-home'>
             <div className="background" style={{ backgroundImage: `url(${backgroundImage})` }}></div>
             <div className="home">
-                <h1 className='title-home'>LeTriviarn !!</h1>
-                <h2 className=''> Juega Nuestras Trivias Mas populares</h2>
+                <h1 className='title-home'>QuizHook !!</h1>
+                <h2 className='text-center'> Juega Nuestros Quizs Mas populares</h2>
                 <div className="five-more-popular-trivias">
                     {
                         quizes
@@ -58,7 +58,9 @@ export default function Home(): JSX.Element {
                             <></>
                     }
                 </div>
-                <button className='btn btn-dark'>
+                <button className='btn btn-dark' onClick={()=>{
+                    navigate("../quizes")
+                }}>
                     Ver todos los Quizes
                 </button>
                 <div className="create-code">
@@ -66,12 +68,12 @@ export default function Home(): JSX.Element {
                     <button className="btn btn-primary " onClick={() => {
                         navigate(`../crearQuiz`)
                     }}>
-                        <h3>Crear Mi Propia Trivia</h3>
+                        <h3>Crear Mi Propio Quiz</h3>
                     </button>
-                    <h2 className='text-center'> Unete a una trivia</h2>
-                    <button className="btn btn-primary">
-                        <input type="text" placeholder='Ingresa el id de la trivia' name="id" ref={idTrivia} />
-                        <h2 className="btn" onClick={() => {
+                    <h2 className='text-center mt-3'> Unete a un Quiz</h2>
+                    <button className="btn btn-dark btn-join">
+                        <input type="text" placeholder='Ingresa el id de la Quiz' name="id" ref={idTrivia} className='form-control'/>
+                        <h2 className="btn btn-light" onClick={() => {
                             navigate(`../preguntas/${idTrivia.current?.value}`)
                         }}>Unirme</h2>
                     </button>

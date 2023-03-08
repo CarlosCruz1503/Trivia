@@ -2,14 +2,15 @@ import React, { useEffect, useState } from 'react'
 import { TAnswer } from '../../interfaces/interfaces'
 
 type Props = {
-    answers: TAnswer[],
+    answers: TAnswer[]
     siguiente: Function
     timeStop: Function
+    quizImage: string
 }
 
 
 
-export default function IanswerComponent({ answers, siguiente, timeStop }: Props): JSX.Element {
+export default function IanswerComponent({ answers, siguiente, timeStop, quizImage }: Props): JSX.Element {
 
     const [answersSelect, setAnswersSelect] = useState<Boolean>(true)
 
@@ -17,7 +18,7 @@ export default function IanswerComponent({ answers, siguiente, timeStop }: Props
 
         timeStop()
         let element = e.target as Element
-        if ( answersSelect ){
+        if (answersSelect) {
             if (answer.correct) {
                 element.classList.add("correct")
             } else {
@@ -34,17 +35,19 @@ export default function IanswerComponent({ answers, siguiente, timeStop }: Props
     return (
         <div className="row" >
             {
-                    answers.map((answer => {
-                        return (
-                            <div className="col-12 col-md-6 col-questions" >
-                                <button className="respuesta" onClick={(e) => {
-                                    select(e, answer)
-                                }}>
+                answers.map((answer => {
+                    return (
+                        <div className="col-12 col-md-6 col-questions" >
+                            <button className="respuesta" onClick={(e) => {
+                                select(e, answer)
+                            }}>
+                                <h4 className='text-center'>
                                     {answer.answerTitle}
-                                </button>
-                            </div>
-                        )
-                    }))
+                                </h4>
+                            </button>
+                        </div>
+                    )
+                }))
             }
         </div>
     )
