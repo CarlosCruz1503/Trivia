@@ -442,11 +442,11 @@ export default function IcreatePage({ }: Props) {
 
                                         {loading ? (<h2 className='text-sucess'>Creando tú publicación</h2>) : null}
                                         {sucess ? (<h1 className='text-sucess'>Quiz creado de forma correcta</h1>) : null}
-                                        {errors.author || errors.name || errors.private || errors.questions || fileError ? (<h1 className='text-danger text-center background-text'>El Quiz no fue creado, revisa los errores que tiene y vuelve a intentar</h1>) : null }
+                                        {fileError ? (<h1 className='text-danger text-center background-text'>El Quiz no fue creado, revisa los errores que tiene y vuelve a intentar</h1>) : null}
                                         {sucess == false ? <h1 className='text-center'> Hubo un error la crear tu Quiz, prueba de nuevo</h1> : null}
                                         {quizId
                                             ?
-                                            <div style={{display:"flex",flexDirection:"column",alignItems:"center",justifyContent:"center"}}>
+                                            <div style={{ display: "flex", flexDirection: "column", alignItems: "center", justifyContent: "center" }}>
                                                 <h1 className='text-sucess text-center background-text'> Tu quiz fue creado </h1>
                                                 <h1 className='text-sucess text-center background-text'>Comparte este Id para que otros puedan jugarlo</h1>
                                                 <h2 className='text-center background-text'>{quizId}</h2>
