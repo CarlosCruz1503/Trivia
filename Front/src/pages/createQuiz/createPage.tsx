@@ -5,6 +5,7 @@ import * as yup from "yup"
 import { Form, Formik, Field, ErrorMessage, FieldArray, getIn } from 'formik'
 import { TQuestions, TQuiz } from '../../interfaces/interfaces'
 import { instance } from '../../utils/axiosConfig'
+import { useNavigate } from 'react-router-dom'
 type Props = {}
 
 export default function IcreatePage({ }: Props) {
@@ -15,6 +16,8 @@ export default function IcreatePage({ }: Props) {
     const [sucess, setSucess] = useState<Boolean>()
     const [loading, setLoading] = useState<Boolean>()
     const [quizId, setQuizId] = useState<string>()
+
+    const navigate = useNavigate()
 
     const quizSchema: any = yup.object().shape({
         name: yup.string()
@@ -143,7 +146,7 @@ export default function IcreatePage({ }: Props) {
 
                                         {listAnswer(index)}
 
-                                        <h5 className='text-center mt-5'>Cual es la respuesta correcta a la pregunta? </h5>
+                                        <h5 className='text-center mt-5 background-text' >Cual es la respuesta correcta a la pregunta? </h5>
                                         <div className="answers-yes mb-1">
                                             <br />
                                             <h2>#1</h2>
@@ -218,7 +221,7 @@ export default function IcreatePage({ }: Props) {
         for (let j = 0; j < 4; j++) {
             arrayAnswers.push(
                 <div>
-                    <h4 className='mt-3'>Escribe la respuesta #{`${j + 1}`}</h4>
+                    <h4 className='mt-3 '>Escribe la respuesta #{`${j + 1}`}</h4>
                     <Field type="text" name={`questions.${i}.answers.${j}.answerTitle`} className="form-control" />
                     <ErrorMessage name={`questions.${i}.answers.${j}.answerTitle`} component="h5" className='text-danger' />
                 </div>
@@ -244,6 +247,7 @@ export default function IcreatePage({ }: Props) {
                                     console.log(file)
                                     let formData = new FormData()
                                     formData.append('myFile', file);
+                                    setFileError(false)
                                     instance.post("/api/storage", formData)
                                         .then((res) => {
                                             console.log(res)
@@ -346,9 +350,9 @@ export default function IcreatePage({ }: Props) {
                                                 ],
                                                 correct: "",
                                             }]
-                                            values.author=""
-                                            values.private=""
-                                            
+                                            values.author = ""
+                                            values.private = ""
+
 
 
                                             setLoading(true)
@@ -378,7 +382,7 @@ export default function IcreatePage({ }: Props) {
                             {({ errors, touched, isSubmitting, values }) => {
                                 return (
                                     <Form className='form-form ' >
-                                        <h3 className='text-center'>Nombre para el Quiz</h3>
+                                        <h3 className='text-center background-text'>Nombre para el Quiz</h3>
                                         <Field id="name" name="name" type="text" className="field-form" />
                                         {
                                             errors.name && touched.name && (
@@ -388,7 +392,7 @@ export default function IcreatePage({ }: Props) {
                                             )
                                         }
 
-                                        <h3 className='text-center'>Imagen para el quiz</h3>
+                                        <h3 className='text-center background-text'> Imagen para el quiz</h3>
 
                                         <input
                                             onChange={e => {
@@ -438,13 +442,29 @@ export default function IcreatePage({ }: Props) {
 
                                         {loading ? (<h2 className='text-sucess'>Creando tú publicación</h2>) : null}
                                         {sucess ? (<h1 className='text-sucess'>Quiz creado de forma correcta</h1>) : null}
-                                        {sucess == false ? <h1 className='text-sucess'> Hubo un error la crear tu Quiz, prueba de nuevo</h1> : null}
+                                        {errors || fileError ? (<h1 className='text-sucess text-center'>El Quiz no fue creado, revisa los errores que tiene y vuelve a intentar</h1>) : null }
+                                        {sucess == false ? <h1 className='text-sucess text-center'> Hubo un error la crear tu Quiz, prueba de nuevo</h1> : null}
                                         {quizId
                                             ?
-                                            <div>
-                                                <h1 className='text-sucess text-center'> Tu quiz fue creado </h1>
-                                                <h1 className='text-sucess text-center'>Comparte este Id para que otros puedan jugarlo</h1>
-                                                <h2 className='text-center'>{quizId}</h2>
+                                            <div style={{display:"flex",flexDirection:"column",alignItems:"center",justifyContent:"center"}}>
+                                                <h1 className='text-sucess text-center background-text'> Tu quiz fue creado </h1>
+                                                <h1 className='text-sucess text-center background-text'>Comparte este Id para que otros puedan jugarlo</h1>
+                                                <h2 className='text-center background-text'>{quizId}</h2>
+                                                <h2 className='text-center text-danger background-text'>
+                                                    Si elegiste que tu quiz sea privado solo podra ser jugado si compartes el id
+                                                </h2>
+                                                <h2 className='text-center text-danger background-text'>
+                                                    Si es publico podra ser jugado por cualquier persona
+                                                </h2>
+                                                <button className='btn btn-primary' onClick={() => {
+                                                    navigate("../..")
+                                                }}>
+                                                    Volver a la pagina principal
+                                                </button>
+
+                                                <h2 className="btn btn-light" onClick={() => {
+                                                    navigate(`../preguntas/${quizId}`)
+                                                }}>Jugar mi Quiz</h2>
                                             </div>
                                             :
                                             null}

@@ -4,6 +4,7 @@ import { BrowserRouter as Router, Routes, Route, redirect } from 'react-router-d
 import IquestionsPage from '../pages/questions/questionsPage';
 import IcreatePage from '../pages/createQuiz/createPage';
 import IallQuizes from '../pages/All Quiz/allQuizes';
+import Ierror from '../pages/Error/error';
 
 function RouterPage():JSX.Element {
     return (
@@ -13,6 +14,7 @@ function RouterPage():JSX.Element {
                 <Route path="/preguntas/:id" element={<IquestionsPage></IquestionsPage>}></Route>
                 <Route path="/crearQuiz" element={<IcreatePage></IcreatePage>} ></Route>
                 <Route path="/quizes" element={<IallQuizes></IallQuizes>} ></Route>
+                <Route path="*" element={<Ierror></Ierror>}></Route>
             </Routes>
         </Router>
     );
