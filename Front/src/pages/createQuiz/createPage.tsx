@@ -351,7 +351,7 @@ export default function IcreatePage({ }: Props) {
                                                 correct: "",
                                             }]
                                             values.author = ""
-                                            values.private = ""
+                                            values.private = "false"
 
 
 
@@ -414,19 +414,12 @@ export default function IcreatePage({ }: Props) {
                                             {preview ? <img className='img-profile img-fluid form-image' src={preview} alt="x" /> : <img className='img-profile img-fluid form-image' src={`https://i.pinimg.com/550x/b5/46/3c/b5463c3591ec63cf076ac48179e3b0db.jpg`} alt="x" />}
                                         </div>
 
-                                        <div className="form-check ">
-                                            <input id="private1" name="private" type="radio" className="" value="true" />
-                                            <label className="form-check-label m-2 mt-0 mb-0" htmlFor="private">
-                                                Este Quiz es Privado
-                                            </label>
-                                        </div>
+                                        <Field name="private" as="select">
+                                            <option value="true">Red</option>
+                                            <option value="false">Green</option>
+                                            <option value="blue">Blue</option>
+                                        </Field>
 
-                                        <div className="form-check ">
-                                            <input id="private1" name="private" type="radio" className="" value="false" checked />
-                                            <label className="form-check-label m-2 mt-0 mb-0" htmlFor="private">
-                                                Este Quiz es Publico
-                                            </label>
-                                        </div>
 
                                         <h3 className='text-center'>Quien es el autor de este quiz</h3>
                                         <Field id="author" name="author" type="text" className="field-form" />
