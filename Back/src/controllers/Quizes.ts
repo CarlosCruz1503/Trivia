@@ -53,7 +53,9 @@ export const createQuiz = async (req: express.Request, res: express.Response) =>
 export const deleteQuiz = async (req: express.Request, res: express.Response) => {
     try {
         const id = req.params.id
-        const quiz = await QuizModel.deleteOne({ id })
+        console.log(id)
+        const quiz = await QuizModel.deleteOne({_id:id})
+        console.log("hola")
         res.send(quiz)
     } catch {
         handleError(res, "DELETE QUIZ WRONG", 400)
@@ -89,8 +91,8 @@ export const pointsQuiz = async (req: express.Request, res: express.Response) =>
 export const getPointsQuiz = async (req: express.Request, res: express.Response) => {
     try {
         const id = req.params.id
+        console.log(id)
         let quizPoints = await QuizModel.findById(id).select("points")
-
         res.send(quizPoints)
     } catch (e) {
         handleError(res, "GET POINTS QUIZ WRONG", 400)
