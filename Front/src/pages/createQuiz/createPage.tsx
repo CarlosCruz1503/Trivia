@@ -11,7 +11,7 @@ type Props = {}
 export default function IcreatePage({ }: Props) {
 
     const [file, setFile] = useState<File>()
-    const [fileError, setFileError] = useState<Boolean>(false)
+    const [fileError, setFileError] = useState<Boolean>()
     const [preview, setPreview] = useState<string>()
     const [sucess, setSucess] = useState<Boolean>()
     const [loading, setLoading] = useState<Boolean>()
@@ -442,8 +442,8 @@ export default function IcreatePage({ }: Props) {
 
                                         {loading ? (<h2 className='text-sucess'>Creando tú publicación</h2>) : null}
                                         {sucess ? (<h1 className='text-sucess'>Quiz creado de forma correcta</h1>) : null}
-                                        {errors || fileError ? (<h1 className='text-sucess text-center'>El Quiz no fue creado, revisa los errores que tiene y vuelve a intentar</h1>) : null }
-                                        {sucess == false ? <h1 className='text-sucess text-center'> Hubo un error la crear tu Quiz, prueba de nuevo</h1> : null}
+                                        {errors.author || errors.name || errors.private || errors.questions || fileError ? (<h1 className='text-danger text-center background-text'>El Quiz no fue creado, revisa los errores que tiene y vuelve a intentar</h1>) : null }
+                                        {sucess == false ? <h1 className='text-center'> Hubo un error la crear tu Quiz, prueba de nuevo</h1> : null}
                                         {quizId
                                             ?
                                             <div style={{display:"flex",flexDirection:"column",alignItems:"center",justifyContent:"center"}}>
