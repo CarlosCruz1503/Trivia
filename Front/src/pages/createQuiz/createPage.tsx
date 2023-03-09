@@ -269,11 +269,21 @@ export default function IcreatePage({ }: Props) {
 
                                                 questionsGood.push(question)
                                             })
+                                            
+                                            let privateQuiz
+
+                                            console.log(values.private)
+
+                                            if (values.private == "true") {
+                                                privateQuiz = true
+                                            } else {
+                                                privateQuiz = false
+                                            }
                                             const dataQuiz = {
                                                 name: values.name,
                                                 questions: questionsGood,
                                                 image: res.data._id,
-                                                private: values.private,
+                                                private: privateQuiz,
                                                 author: values.author,
                                                 points: []
                                             }
@@ -415,9 +425,9 @@ export default function IcreatePage({ }: Props) {
                                         </div>
 
                                         <Field name="private" as="select">
-                                            <option value="true">Red</option>
-                                            <option value="false">Green</option>
-                                            <option value="blue">Blue</option>
+                                            <option value="true">Este es un quiz privado</option>
+                                            <option value="false">Este es un quiz publico</option>
+
                                         </Field>
 
 

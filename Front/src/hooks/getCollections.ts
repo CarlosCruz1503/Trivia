@@ -1,7 +1,5 @@
 import { instance } from "../utils/axiosConfig"
 
-const URL = process.env.REACT_APP_API_URL
-
 export const getQuizes = async () => {
     const quizes = await instance.get(`/api/quiz/`)
     return quizes
