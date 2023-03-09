@@ -40,8 +40,8 @@ export default function Home(): JSX.Element {
                 <h1 className='title-home'>QuizHook !!</h1>
                 <h2 className='text-center'> Juega Nuestros Quizs Mas populares</h2>
                 <div className="five-more-popular-trivias">
-                    {
-                        quizes
+                {
+                        quizes.length > 0
                             ?
                             quizes.map(quiz => {
                                 return (
@@ -50,7 +50,7 @@ export default function Home(): JSX.Element {
                                     }}
                                         className="btn btn-more-popular ">
                                         <h3>{quiz.name}</h3>
-                                        <img src={quiz.image.url} alt="" />
+                                        
                                     </button>
                                 )
                             })
