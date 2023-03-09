@@ -3,12 +3,12 @@ import { instance } from "../utils/axiosConfig"
 const URL = process.env.REACT_APP_API_URL
 
 export const getQuizes = async () => {
-    const quizes = await instance.get("https://quizhook.hopto.org/api/quiz/")
+    const quizes = await instance.get(`/api/quiz/`)
     return quizes
 }
 
 export const getQuiz = async (id: string) => {
-    const quiz = await instance.get(`https://quizhook.hopto.org/api/quiz/${id}`)
+    const quiz = await instance.get(`/api/quiz/${id}`)
     return quiz
 }
 export const submitPoints = async (quizId: String, data: Object) => {

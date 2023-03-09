@@ -3,9 +3,11 @@ import cors  from "cors"
 import QuizRouter from "./routes/Quizes"
 import StorageRouter from "./routes/Storage"
 import UserRouter from "./routes/Users"
-require('dotenv').config({ path: './process.env' })
+import * as dotenv from "dotenv";
+dotenv.config({ path: __dirname + '/.env' });
 
 import { dbConnect } from "./utils/handleDBConnect"
+
 const app = express()
 app.use(cors())
 app.use(express.json())

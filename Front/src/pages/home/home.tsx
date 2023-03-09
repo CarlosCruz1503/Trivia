@@ -50,7 +50,7 @@ export default function Home(): JSX.Element {
                                     }}
                                         className="btn btn-more-popular ">
                                         <h3>{quiz.name}</h3>
-                                        
+                                        <img src={quiz.image.url} alt="" />
                                     </button>
                                 )
                             })
