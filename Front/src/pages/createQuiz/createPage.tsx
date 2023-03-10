@@ -427,7 +427,6 @@ export default function IcreatePage({ }: Props) {
                                         <Field name="private" as="select">
                                             <option value="true">Este es un quiz privado</option>
                                             <option value="false">Este es un quiz publico</option>
-
                                         </Field>
 
 

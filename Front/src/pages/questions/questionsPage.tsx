@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react'
-import { useParams } from 'react-router-dom'
+import { useNavigate, useParams } from 'react-router-dom'
 import { getPoints, getQuiz } from '../../hooks/getCollections'
 import { TPoints, TQuestions, TQuiz } from '../../interfaces/interfaces'
 import IQuestions from '../../components/questions'
@@ -18,12 +18,16 @@ export default function IquestionsPage({ }: Props) {
     const [questions, setQuestions] = useState<appState["questions"]>()
     const [quiz, setQuiz] = useState<appState["quiz"]>()
 
-    useEffect(() => {       
+    const navigate = useNavigate()
+
+    useEffect(() => {
         if (id) {
             getQuiz(id)
                 .then(res => {
                     setQuiz(res.data)
                     setQuestions(res.data.questions)
+                }).catch(e => {
+                    navigate("../xd")
                 })
         }
 
