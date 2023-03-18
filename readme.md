@@ -1,4 +1,4 @@
-# QUIZHOOK ( Copia De Kahoot )
+# QUIZHOOK 
 
 Este proyecto es una Aplicación emula las funciones de Kahoot
 Puedes crear tu quiz y compartirlo con tus estudiantes y amigos,
