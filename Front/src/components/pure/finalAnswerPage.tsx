@@ -1,6 +1,5 @@
 import React, { useRef, useEffect, useState } from 'react'
 import { TPoints, TQuestions } from '../../interfaces/interfaces'
-
 import "../../styles/scss/questions/finalPage.scss"
 import backgroundImage from "../../resources/5719387.jpg"
 import { instance } from '../../utils/axiosConfig'
@@ -8,6 +7,8 @@ import { getPoints, submitPoints } from '../../hooks/getCollections'
 import oro from "../../resources/oro.png"
 import plata from "../../resources/plata.png"
 import bronze from "../../resources/bronze.png"
+import { useNavigate } from 'react-router-dom'
+import { string } from 'yup'
 
 type Props = {
     numCorrects: number
@@ -30,15 +31,17 @@ export default function IFinalAnswerPage({ numCorrects, questions, secondsForAns
 
     const [puntajeSubmit, setPuntajeSubmit] = useState(false)
 
-    console.log(pointsState)
+
+    console.log(window.location.href)
+
+    const navigate = useNavigate()
 
     return (
         <div className="div-final">
             <div className="background" style={{ backgroundImage: `url(${backgroundImage})` }}>
                 <div className="final">
-                    <h1>Respuestas Correctas</h1>
-                    <h1>{numCorrects}/{questions.length}</h1>
-                    <h1 className='text-center m-1'>Tardaste {secondsForAnswer}s en contestar la trivia</h1>
+                    <h1 className='background-text'>Respuestas Correctas {numCorrects}/{questions.length}</h1>
+                    <h1 className='text-center m-1 background-text' >Tardaste {secondsForAnswer}s en contestar la trivia</h1>
                     <h1> Tu puntaje es {points}</h1>
                     {
                         !puntajeSubmit
@@ -162,6 +165,12 @@ export default function IFinalAnswerPage({ numCorrects, questions, secondsForAns
                             :
                             <></>
                     }
+                    <button onClick={() => {
+                        navigate("../..")
+                    }}
+                        className="btn btn-primary">
+                        <h3>Volver a la pagina principal</h3>
+                    </button>
                 </div>
             </div >
         </div>

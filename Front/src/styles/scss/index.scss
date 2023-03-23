@@ -91,6 +91,13 @@ td {
     }
 }
 
+@media (max-width:1200px) {
+    .background {
+        background-position: 15%;
+        background-position-x: center;
+    }
+}
+
 @media (max-width:992px) {
     .background {
         background-position: 55%;
